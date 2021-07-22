@@ -27,12 +27,47 @@
                         text-gray-900
                     "
                 >
-                    Sign in to your account
+                    Register your account
                 </h2>
             </div>
-            <form @submit.prevent="handleLogin" class="mt-8 space-y-6">
+            <form @submit.prevent="handleRegister" class="mt-8 space-y-6">
                 <input type="hidden" name="remember" value="true" />
                 <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="username" class="sr-only">Username</label>
+                        <input
+                            v-model="username"
+                            name="username"
+                            type="text"
+                            autocomplete="given-name"
+                            required
+                            class="
+                                appearance-none
+                                rounded-none
+                                relative
+                                block
+                                w-full
+                                px-3
+                                py-2
+                                border border-gray-300
+                                placeholder-gray-500
+                                text-gray-900
+                                rounded-b-md
+                                focus:outline-none
+                                focus:ring-indigo-500
+                                focus:border-indigo-500
+                                focus:z-10
+                                sm:text-sm
+                            "
+                            placeholder="Name"
+                        />
+                        <p
+                            :class="[usernameerror ? '' : 'hidden']"
+                            class="text-red-500 text-xs italic"
+                        >
+                            Your name is required
+                        </p>
+                    </div>
                     <div>
                         <label for="email-address" class="sr-only"
                             >Email address</label
@@ -109,45 +144,25 @@
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            class="
-                                h-4
-                                w-4
-                                text-indigo-600
-                                focus:ring-indigo-500
-                                border-gray-300
-                                rounded
-                            "
-                        />
-                        <label
-                            for="remember-me"
-                            class="ml-2 block text-sm text-gray-900"
-                        >
-                            Remember me
-                        </label>
-                    </div>
+                    <div class="flex items-center"></div>
 
                     <div class="text-sm">
                         <router-link
-                            :to="{ path: 'register' }"
+                            :to="{ path: 'login' }"
                             class="
                                 font-medium
                                 text-indigo-600
                                 hover:text-indigo-500
                             "
                         >
-                            Register user?
+                            Sign in?
                         </router-link>
                     </div>
                 </div>
 
                 <div>
                     <button
-                        @click="handleLogin"
+                        @click="handleRegister"
                         type="button"
                         class="
                             group
@@ -200,7 +215,7 @@
                                 />
                             </svg>
                         </span>
-                        Sign in
+                        Register
                     </button>
                 </div>
             </form>
@@ -210,14 +225,19 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
     setup() {
         const email = ref("");
         const password = ref("");
+        const username = ref("");
         const errors = ref([]);
         const emailerror = ref(false);
         const passworderror = ref(false);
+        const usernameerror = ref(false);
+
+        const router = useRouter();
 
         watchEffect(() => {
             let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -249,16 +269,25 @@ export default {
                     delete val.password;
                 });
             }
-            console.log(errors.value);
+
+            if (!username.value) {
+                usernameerror.value = true;
+            } else {
+                usernameerror.value = false;
+            }
         });
 
-        const handleLogin = () => {
+        const handleRegister = () => {
             // csrf token with SPA app for laravel
             axios.get("/sanctum/csrf-cookie").then(async (response) => {
                 try {
-                    const res = await axios.post("/api/authenticate", {
+                    const res = await axios.post("/api/register", {
                         email: email.value,
                         password: password.value,
+                        name: username.value,
+                    });
+                    router.push({
+                        name: "login",
                     });
                     console.log(res);
                 } catch (err) {
@@ -269,10 +298,12 @@ export default {
         return {
             email,
             password,
-            handleLogin,
+            handleRegister,
             errors,
             emailerror,
             passworderror,
+            username,
+            usernameerror,
         };
     },
 };
