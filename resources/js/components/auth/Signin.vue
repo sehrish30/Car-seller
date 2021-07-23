@@ -210,6 +210,7 @@
 
 <script>
 import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
     setup() {
@@ -219,13 +220,14 @@ export default {
         const emailerror = ref(false);
         const passworderror = ref(false);
 
+        const router = useRouter();
+
         watchEffect(() => {
             let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             let passwordRegex =
                 /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
             if (!email.value.match(regexEmail)) {
-                console.log(email.value);
                 errors.value.push({
                     email: "Email format should be abc@live.com",
                 });
@@ -236,7 +238,7 @@ export default {
                 });
                 emailerror.value = false;
             }
-            console.log(passwordRegex.test(password.value));
+
             if (!passwordRegex.test(password.value)) {
                 passworderror.value = true;
                 errors.value.push({
@@ -249,7 +251,6 @@ export default {
                     delete val.password;
                 });
             }
-            console.log(errors.value);
         });
 
         const handleLogin = () => {
@@ -260,9 +261,13 @@ export default {
                         email: email.value,
                         password: password.value,
                     });
-                    console.log(res);
+
+                    localStorage.setItem("token", res.data.access_token);
+                    router.push({
+                        name: "dashboard",
+                    });
                 } catch (err) {
-                    console.error(err);
+                    console.log(`Error ${err}`);
                 }
             });
         };

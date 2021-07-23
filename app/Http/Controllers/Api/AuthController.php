@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\AuthRequest;
 
 class AuthController extends Controller
 {
@@ -20,10 +21,10 @@ class AuthController extends Controller
     */
     public function login(Request $request){
        try{
-           $request->validate([
-               'email' => 'email|required',
-               'password' => 'required'
-           ]);
+        //    $request->validate([
+        //        'email' => 'email|required',
+        //        'password' => 'required'
+        //    ]);
            $credentials = request(['email', 'password']);
            if(!Auth::attempt($credentials)){
                return response()->json([
@@ -47,19 +48,11 @@ class AuthController extends Controller
        }
     }
 
-    public function register(Request $request){
+    public function register(AuthRequest $request){
         try{
-            $v = Validator::make($request->all(), [
-                'email' => 'required|email|unique:users',
-                'password'  => 'required|min:3',
-            ]);
-            if ($v->fails())
-            {
-                return response()->json([
-                    'status' => 'error',
-                    'errors' => $v->errors()
-                ], 422);
-            }
+         // validated returns all the data validated
+            $validated = $request->validated();
+          
             $user = new User;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);

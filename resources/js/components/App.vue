@@ -11,9 +11,17 @@
 <script>
 import AppFooter from "./partials/Footer.vue";
 import AppHeader from "./partials/Header.vue";
+import { useRouter } from "vue-router";
+
 export default {
     components: { AppFooter, AppHeader },
     setup() {
+        const router = useRouter();
+        if (localStorage.getItem("token")) {
+            router.push({
+                name: "dashboard",
+            });
+        }
         return {};
     },
 };
