@@ -65,6 +65,20 @@
                 >
                     Products
                 </router-link>
+                <router-link
+                    :to="{ name: 'addCategory' }"
+                    class="
+                        primary-color
+                        block
+                        mt-4
+                        lg:inline-block lg:mt-0
+                        text-teal-200
+                        hover:text-white
+                        mr-4
+                    "
+                >
+                    Add category
+                </router-link>
             </div>
             <div>
                 <button

@@ -4,6 +4,7 @@ import Signin from "./components/auth/Signin.vue";
 import Register from "./components/auth/Register.vue";
 import Dashboard from "./components/dashboard/Dashboard.vue";
 import ViewCategories from "./components/screens/category/ViewCategories.vue";
+import AddCategory from "./components/screens/category/AddCategory.vue";
 
 // import store from "./store/index";
 
@@ -35,6 +36,11 @@ const router = createRouter({
             path: "/categories",
             component: ViewCategories,
             name: "viewcategories",
+        },
+        {
+            path: "/add-category",
+            component: AddCategory,
+            name: "addCategory",
         },
     ],
 });

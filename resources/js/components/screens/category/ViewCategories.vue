@@ -30,7 +30,7 @@
                             class="text-white p-2 rounded text-sm button-color"
                         >
                             <font-awesome-icon :icon="['fas', 'pen']" />
-                            <span class="ml-2">Cancel</span>
+                            <span class="ml-2">Edit</span>
                         </button>
                     </td>
                     <td class="p-4 text-center">
@@ -44,11 +44,11 @@
                                 rounded
                                 text-sm
                                 w-auto
-                                button-color
+                                primary-bg
                             "
                         >
                             <font-awesome-icon icon="trash" />
-                            <span class="ml-2">Cancel</span>
+                            <span class="ml-2">Delete</span>
                         </button>
                     </td>
                 </tr>
