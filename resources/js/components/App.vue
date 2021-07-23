@@ -17,9 +17,9 @@ export default {
     components: { AppFooter, AppHeader },
     setup() {
         const router = useRouter();
-        if (localStorage.getItem("token")) {
+        if (!localStorage.getItem("token")) {
             router.push({
-                name: "dashboard",
+                name: "login",
             });
         }
         return {};

@@ -38,7 +38,7 @@
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div class="text-sm lg:flex-grow">
                 <router-link
-                    to="#responsive-header"
+                    :to="{ name: 'viewcategories' }"
                     class="
                         primary-color
                         block
@@ -67,8 +67,9 @@
                 </router-link>
             </div>
             <div>
-                <router-link
-                    to="/"
+                <button
+                    @click="logout"
+                    type="button"
                     class="
                         primary-color
                         inline-block
@@ -79,29 +80,44 @@
                         border
                         rounded
                         text-white
-                        border-white
-                        hover:border-transparent
-                        hover:text-teal-500
-                        hover:bg-white
                         mt-4
                         lg:mt-0
                     "
-                    >Download</router-link
                 >
+                    Logout
+                </button>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 export default {
     setup() {
+        const router = useRouter();
+        const logout = () => {
+            console.log("LOGOUT");
+            localStorage.removeItem("token");
+            token.value = "";
+            router.push({
+                name: "login",
+            });
+        };
+        console.log("MOUNTED");
         const token = ref(localStorage.getItem("token"));
         localStorage.getItem("token");
+        console.log(token);
+
+        watchEffect(() => {
+            console.log("CRY", token.value);
+            token.value = localStorage.getItem("token");
+        });
 
         return {
             token,
+            logout,
         };
     },
 };

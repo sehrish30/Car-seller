@@ -39,3 +39,5 @@ class Handler extends ExceptionHandler
         });
     }
 }
+
+// composer require fruitcake/laravel-cors
