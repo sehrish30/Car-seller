@@ -5,7 +5,7 @@ import Register from "./components/auth/Register.vue";
 import Dashboard from "./components/dashboard/Dashboard.vue";
 import ViewCategories from "./components/screens/category/ViewCategories.vue";
 import AddCategory from "./components/screens/category/AddCategory.vue";
-
+import EditCategory from "./components/screens/category/EditCategory.vue";
 // import store from "./store/index";
 
 const router = createRouter({
@@ -41,6 +41,12 @@ const router = createRouter({
             path: "/add-category",
             component: AddCategory,
             name: "addCategory",
+        },
+        {
+            path: "/edit-category",
+            component: EditCategory,
+            name: "editCategory",
+            props: true,
         },
     ],
 });

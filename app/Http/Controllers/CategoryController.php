@@ -86,7 +86,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $category = Category::find($id);
+       $category->name = $request->name;
+       $category->order = $request->order;
+      
+       if($request->image && $request->image !== $category->image){
+       unlink(public_path('images/' . $request->oldImage));
+        $image = $request->image;
+        $image_new_name = time().$image->getClientOriginalName();
+        $image->move(public_path('images'), $image_new_name);
+        $category->image = $image_new_name;
+       }
+       $category->save();
+       
     }
 
     /**

@@ -32,7 +32,19 @@
                     <td class="p-4 text-center">{{ item.order }}</td>
                     <td class="p-4 text-center items-center content-center">
                         <button
-                            type="submit"
+                            @click="
+                                () => {
+                                    $router.push({
+                                        name: 'editCategory',
+                                        params: {
+                                            id: item.id,
+                                            name: item.name,
+                                            order: item.order,
+                                            image: item.image
+                                        },
+                                    });
+                                }
+                            "
                             class="text-white p-2 rounded text-sm button-color"
                         >
                             <font-awesome-icon :icon="['fas', 'pen']" />
