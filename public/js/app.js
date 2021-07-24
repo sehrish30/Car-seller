@@ -28709,11 +28709,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var mosha_vue_toastify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mosha-vue-toastify */ "./node_modules/mosha-vue-toastify/dist/mosha-vue-toastify.es.js");
+/* harmony import */ var mosha_vue_toastify_dist_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! mosha-vue-toastify/dist/style.css */ "./node_modules/mosha-vue-toastify/dist/style.css");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -28754,9 +28758,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
 
     getCategories();
+
+    var deleteCategory = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log("DELETE");
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_2___default().delete("http://127.0.0.1:8000/api/delete/category/".concat(id));
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status >= 200 && response.status < 300) {
+                  (0,mosha_vue_toastify__WEBPACK_IMPORTED_MODULE_3__.createToast)("Category deleted", {
+                    title: "some title",
+                    description: "some good description",
+                    type: "info"
+                  });
+                  categories.value = categories.value.filter(function (category) {
+                    return category.id !== id;
+                  });
+                }
+
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                console.log(_context2.t0);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }));
+
+      return function deleteCategory(_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
     return {
       categories: categories,
-      url: url
+      url: url,
+      deleteCategory: deleteCategory
     };
   }
 });
@@ -29496,12 +29549,8 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_11 = {
   "class": "p-4 text-center"
 };
-var _hoisted_12 = {
-  type: "submit",
-  "class": "\r\n                                flex\r\n                                items-center\r\n                                text-white\r\n                                p-2\r\n                                rounded\r\n                                text-sm\r\n                                w-auto\r\n                                primary-bg\r\n                            "
-};
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "ml-2"
 }, "Delete", -1
 /* HOISTED */
@@ -29528,9 +29577,17 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_font_awesome_icon, {
       icon: ['fas', 'pen']
-    }), _hoisted_10])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_font_awesome_icon, {
+    }), _hoisted_10])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      type: "submit",
+      onClick: function onClick($event) {
+        return $setup.deleteCategory(item.id);
+      },
+      "class": "\r\n                                flex\r\n                                items-center\r\n                                text-white\r\n                                p-2\r\n                                rounded\r\n                                text-sm\r\n                                w-auto\r\n                                primary-bg\r\n                            "
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_font_awesome_icon, {
       icon: "trash"
-    }), _hoisted_13])])], 2
+    }), _hoisted_12], 8
+    /* PROPS */
+    , ["onClick"])])], 2
     /* CLASS */
     );
   }), 128
@@ -29730,6 +29787,30 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans&display=swap);"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".blue-color[data-v-7e3c70ef] {\n  background-color: #e8f0f2;\n}\n.noto[data-v-7e3c70ef] {\n  font-family: \"Noto Sans\", sans-serif;\n}\n.anto[data-v-7e3c70ef] {\n  font-family: \"Anton\", sans-serif;\n}\n.primary-color[data-v-7e3c70ef] {\n  color: #053742;\n}\n.secondary-color[data-v-7e3c70ef] {\n  color: #a2dbfa;\n}\n.tertiary-color[data-v-7e3c70ef] {\n  color: #39a2db;\n}\n.quaternary-color[data-v-7e3c70ef] {\n  color: #39a2db;\n}\n.button-color[data-v-7e3c70ef] {\n  background-color: #053742;\n}\n.primary-bg[data-v-7e3c70ef] {\n  border-color: #e02e49;\n  border-width: 2px;\n  color: #e02e49;\n}\n.image[data-v-7e3c70ef] {\n  height: 100px;\n  width: 100px;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/mosha-vue-toastify/dist/style.css":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/mosha-vue-toastify/dist/style.css ***!
+  \****************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";.mosha__toast{touch-action:pan-x;display:flex;justify-content:space-between;position:fixed;min-height:64px;max-height:800px;box-sizing:border-box;overflow:hidden;padding:12px 8px;word-break:break-word;min-width:312px;max-width:480px;z-index:9999;width:-webkit-max-content;width:-moz-max-content;width:max-content;transition:top .3s ease-out .5s,bottom .3s ease-out .5s;border-radius:8px;box-shadow:0 1px 10px 0 rgba(0,0,0,.1),0 2px 15px 0 rgba(0,0,0,.05);margin:0 16px;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mosha__toast__content-wrapper{display:flex;align-items:center}.mosha__toast__content{font-family:sans-serif;line-height:20px;display:flex;flex-direction:column;color:#fff}.mosha__toast__content__text{margin-bottom:4px;font-size:16px;font-weight:700}.mosha__toast__content__description{font-size:14px;font-weight:400}.mosha__toast__slot-wrapper{width:100%}.mosha__toast__close-icon::before{font-size:20px;cursor:pointer;content:\"×\";color:#fff;transition:color .3s;font-weight:600;margin-left:10px;position:relative;top:-12px}.mosha__toast__close-icon:hover::before{color:grey}.mosha__toast__progress{transition:all linear .2s;position:absolute;z-index:9999;height:8px;background-color:rgba(255,255,255,.6);bottom:0;margin-left:-8px}.mosha__toast.success{background-color:#06d6a0}.mosha__toast.warning{background-color:#ffc43d}.mosha__toast.info{background-color:#1b9aaa}.mosha__toast.danger{background-color:#ef476f}.mosha__toast.default{background-color:#fff}.mosha__toast.default .mosha__toast__content{color:#616161}.mosha__toast.default .mosha__toast__close-icon::before{color:#616161}.mosha__toast.default .mosha__toast__close-icon:hover::before{color:#d0d4d4}.mosha__toast.default .mosha__toast__progress{background-image:linear-gradient(-225deg,#69eacb 0,#eaccf8 48%,#6654f1 100%)}@media only screen and (max-width:475px){.mosha__toast{width:100%;margin:0 auto}}.mosha__icon{margin-right:16px}.mosha__bounceInRight-enter-active{-webkit-animation:bounceInRight .7s;animation:bounceInRight .7s}.mosha__bounceInRight-leave-active{-webkit-animation:bounceOutLeft .7s;animation:bounceOutLeft .7s}.mosha__bounceInLeft-enter-active{-webkit-animation:bounceInLeft .7s;animation:bounceInLeft .7s}.mosha__bounceInLeft-leave-active{-webkit-animation:bounceOutRight .7s;animation:bounceOutRight .7s}.mosha__bounceInDown-enter-active{-webkit-animation:bounceInDown .7s;animation:bounceInDown .7s}.mosha__bounceInDown-leave-active{-webkit-animation:bounceOutUp .7s;animation:bounceOutUp .7s}.mosha__bounceInUp-enter-active{-webkit-animation:bounceInUp .7s;animation:bounceInUp .7s}.mosha__bounceInUp-leave-active{-webkit-animation:bounceOutDown .7s;animation:bounceOutDown .7s}@-webkit-keyframes bounceInRight{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(2000px,0,0)}60%{opacity:1;transform:translate3d(-25px,0,0)}75%{transform:translate3d(10px,0,0)}90%{transform:translate3d(-5px,0,0)}to{transform:none}}@keyframes bounceInRight{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(2000px,0,0)}60%{opacity:1;transform:translate3d(-25px,0,0)}75%{transform:translate3d(10px,0,0)}90%{transform:translate3d(-5px,0,0)}to{transform:none}}@-webkit-keyframes bounceOutLeft{20%{opacity:1;transform:translate3d(-20px,0,0)}to{opacity:0;transform:translate3d(2000px,0,0)}}@keyframes bounceOutLeft{20%{opacity:1;transform:translate3d(-20px,0,0)}to{opacity:0;transform:translate3d(2000px,0,0)}}@-webkit-keyframes bounceInLeft{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(-2000px,0,0)}60%{opacity:1;transform:translate3d(25px,0,0)}75%{transform:translate3d(-10px,0,0)}90%{transform:translate3d(5px,0,0)}to{transform:none}}@keyframes bounceInLeft{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(-2000px,0,0)}60%{opacity:1;transform:translate3d(25px,0,0)}75%{transform:translate3d(-10px,0,0)}90%{transform:translate3d(5px,0,0)}to{transform:none}}@-webkit-keyframes bounceOutRight{20%{opacity:1;transform:translate3d(20px,0,0)}to{opacity:0;transform:translate3d(-2000px,0,0)}}@keyframes bounceOutRight{20%{opacity:1;transform:translate3d(20px,0,0)}to{opacity:0;transform:translate3d(-2000px,0,0)}}@-webkit-keyframes bounceInUp{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(0,3000px,0)}60%{opacity:1;transform:translate3d(0,-20px,0)}75%{transform:translate3d(0,10px,0)}90%{transform:translate3d(0,-5px,0)}to{transform:translate3d(0,0,0)}}@keyframes bounceInUp{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}from{opacity:0;transform:translate3d(0,3000px,0)}60%{opacity:1;transform:translate3d(0,-20px,0)}75%{transform:translate3d(0,10px,0)}90%{transform:translate3d(0,-5px,0)}to{transform:translate3d(0,0,0)}}@-webkit-keyframes bounceOutUp{20%{transform:translate3d(0,-10px,0)}40%,45%{opacity:1;transform:translate3d(0,20px,0)}to{opacity:0;transform:translate3d(0,-2000px,0)}}@keyframes bounceOutUp{20%{transform:translate3d(0,-10px,0)}40%,45%{opacity:1;transform:translate3d(0,20px,0)}to{opacity:0;transform:translate3d(0,-2000px,0)}}@-webkit-keyframes bounceInDown{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,-3000px,0)}60%{opacity:1;transform:translate3d(0,25px,0)}75%{transform:translate3d(0,-10px,0)}90%{transform:translate3d(0,5px,0)}to{transform:none}}@keyframes bounceInDown{60%,75%,90%,from,to{-webkit-animation-timing-function:cubic-bezier(.215,.61,.355,1);animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,-3000px,0)}60%{opacity:1;transform:translate3d(0,25px,0)}75%{transform:translate3d(0,-10px,0)}90%{transform:translate3d(0,5px,0)}to{transform:none}}@-webkit-keyframes bounceOutDown{20%{transform:translate3d(0,10px,0)}40%,45%{opacity:1;transform:translate3d(0,-20px,0)}to{opacity:0;transform:translate3d(0,2000px,0)}}@keyframes bounceOutDown{20%{transform:translate3d(0,10px,0)}40%,45%{opacity:1;transform:translate3d(0,-20px,0)}to{opacity:0;transform:translate3d(0,2000px,0)}}.mosha__slideInRight-enter-active{-webkit-animation:slideInRight .5s;animation:slideInRight .5s}.mosha__slideInRight-leave-active{-webkit-animation:slideOutRight .5s;animation:slideOutRight .5s}.mosha__slideInLeft-enter-active{-webkit-animation:slideInLeft .5s;animation:slideInLeft .5s}.mosha__slideInLeft-leave-active{-webkit-animation:slideOutLeft .5s;animation:slideOutLeft .5s}.mosha__slideInDown-enter-active{-webkit-animation:slideInDown .5s;animation:slideInDown .5s}.mosha__slideInDown-leave-active{-webkit-animation:slideOutUp .5s;animation:slideOutUp .5s}.mosha__slideInUp-enter-active{-webkit-animation:slideInUp .5s;animation:slideInUp .5s}.mosha__slideInUp-leave-active{-webkit-animation:slideOutDown .5s;animation:slideOutDown .5s}@-webkit-keyframes slideInRight{from{transform:translate3d(110%,0,0);visibility:visible}to{transform:translate3d(0,0,0)}}@keyframes slideInRight{from{transform:translate3d(110%,0,0);visibility:visible}to{transform:translate3d(0,0,0)}}@-webkit-keyframes slideOutLeft{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(-110%,0,0)}}@keyframes slideOutLeft{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(-110%,0,0)}}@-webkit-keyframes slideInLeft{from{transform:translate3d(-110%,0,0);visibility:visible}to{transform:translate3d(0,0,0)}}@keyframes slideInLeft{from{transform:translate3d(-110%,0,0);visibility:visible}to{transform:translate3d(0,0,0)}}@-webkit-keyframes slideOutRight{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(110%,0,0)}}@keyframes slideOutRight{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(110%,0,0)}}@-webkit-keyframes slideInUp{from{transform:translate3d(0,110%,0);visibility:visible}to{transform:translate3d(0,0,0)}}@keyframes slideInUp{from{transform:translate3d(0,110%,0);visibility:visible}to{transform:translate3d(0,0,0)}}@-webkit-keyframes slideInDown{from{opacity:0;transform:translate3d(0,-120%,0)}to{opacity:1;transform:translate3d(0,0,0)}}@keyframes slideInDown{from{opacity:0;transform:translate3d(0,-120%,0)}to{opacity:1;transform:translate3d(0,0,0)}}@-webkit-keyframes slideOutDown{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(0,500px,0)}}@keyframes slideOutDown{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(0,500px,0)}}@-webkit-keyframes slideOutUp{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(0,-500px,0)}}@keyframes slideOutUp{from{transform:translate3d(0,0,0)}to{visibility:hidden;transform:translate3d(0,-500px,0)}}.mosha__zoomIn-enter-active{-webkit-animation:zoomIn .5s;animation:zoomIn .5s}.mosha__zoomIn-leave-active{-webkit-animation:zoomOut .5s;animation:zoomOut .5s}@-webkit-keyframes zoomIn{from{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes zoomIn{from{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@-webkit-keyframes zoomOut{from{opacity:1}50%{opacity:0;transform:scale3d(.3,.3,.3)}to{opacity:0}}@keyframes zoomOut{from{opacity:1}50%{opacity:0;transform:scale3d(.3,.3,.3)}to{opacity:0}}.mosha__fadeOutRight-leave-active{-webkit-animation:fadeOutRight .5s;animation:fadeOutRight .5s}.mosha__fadeOutLeft-leave-active{-webkit-animation:fadeOutLeft .5s;animation:fadeOutLeft .5s}@-webkit-keyframes fadeOutLeft{from{opacity:1}to{opacity:0;transform:translate3d(-100%,0,0)}}@keyframes fadeOutLeft{from{opacity:1}to{opacity:0;transform:translate3d(-100%,0,0)}}@-webkit-keyframes fadeOutRight{from{opacity:1}to{opacity:0;transform:translate3d(100%,0,0)}}@keyframes fadeOutRight{from{opacity:1}to{opacity:0;transform:translate3d(100%,0,0)}}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -47037,6 +47118,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/mosha-vue-toastify/dist/mosha-vue-toastify.es.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/mosha-vue-toastify/dist/mosha-vue-toastify.es.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "ToastContentType": () => (/* binding */ T),
+/* harmony export */   "createToast": () => (/* binding */ J),
+/* harmony export */   "withProps": () => (/* binding */ ne)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+var e=Object.defineProperty,t=Object.prototype.hasOwnProperty,o=Object.getOwnPropertySymbols,n=Object.prototype.propertyIsEnumerable,s=(t,o,n)=>o in t?e(t,o,{enumerable:!0,configurable:!0,writable:!0,value:n}):t[o]=n,i=(e,i)=>{for(var r in i||(i={}))t.call(i,r)&&s(e,r,i[r]);if(o)for(var r of o(i))n.call(i,r)&&s(e,r,i[r]);return e};const I={type:"default",timeout:5e3,showCloseButton:!0,position:"top-right",transition:"bounce",hideProgressBar:!1,swipeClose:!0};var T,x;(x=T||(T={}))[x.TITLE_ONLY=0]="TITLE_ONLY",x[x.TITLE_DESCRIPTION=1]="TITLE_DESCRIPTION",x[x.COMPONENT=2]="COMPONENT",x[x.VNODE=3]="VNODE";const C={"top-left":{bounce:"mosha__bounceInLeft",zoom:"mosha__zoomIn",slide:"mosha__slideInLeft"},"top-right":{bounce:"mosha__bounceInRight",zoom:"mosha__zoomIn",slide:"mosha__slideInRight"},"top-center":{bounce:"mosha__bounceInDown",zoom:"mosha__zoomIn",slide:"mosha__slideInDown"},"bottom-center":{bounce:"mosha__bounceInUp",zoom:"mosha__zoomIn",slide:"mosha__slideInUp"},"bottom-right":{bounce:"mosha__bounceInRight",zoom:"mosha__zoomIn",slide:"mosha__slideInRight"},"bottom-left":{bounce:"mosha__bounceInLeft",zoom:"mosha__zoomIn",slide:"mosha__slideInLeft"}},M=(e,t,o)=>{const n=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(),s=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(void 0),l=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(),p=e=>e instanceof MouseEvent,u=r=>{!1!==o&&n.value&&(p(r)?s.value=n.value.clientX-r.clientX:s.value=n.value.touches[0].clientX-r.touches[0].clientX,l.value=i(i({},l.value),{transition:"none"}),e.endsWith("left")?l.value.left=-s.value+"px !important":e.endsWith("right")?l.value.right=`${s.value}px !important`:s.value>0?l.value.left=-s.value+"px !important":l.value.right=`${s.value}px !important`,Math.abs(s.value)>200&&t())},c=e=>{!1!==o&&(n.value&&(n.value=void 0),s.value&&(s.value=void 0),removeEventListener(e,u))};return (0,vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted)((()=>{!1!==o&&(c("mousemove"),c("touchmove"))})),{swipedDiff:s,swipeStart:n,swipeStyle:l,swipeHandler:u,startSwipeHandler:t=>{if(!1===o)return;n.value=t;const r=p(t)?"mousemove":"touchmove",a=p(t)?"mouseup":"touchend";addEventListener(r,u),addEventListener(a,(()=>(t=>{const o={transition:"left .3s ease-out",left:0},r={transition:"right .3s ease-out",right:0},a={transition:"all .3s ease-out",left:0,right:0};e.endsWith("left")?l.value=i(i({},l.value),o):e.endsWith("right")?l.value=i(i({},l.value),r):l.value=i(i({},l.value),a),n.value=void 0,s.value=void 0,removeEventListener(t,u)})(r)))},cleanUpMove:c}};var S=(0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({props:{type:{type:String,default:"default"}}});const z={class:"mosha__icon"},L={key:0,xmlns:"http://www.w3.org/2000/svg",height:"32px",viewBox:"0 0 24 24",width:"32px",fill:"#ffffff"},E=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M4.47 21h15.06c1.54 0 2.5-1.67 1.73-3L13.73 4.99c-.77-1.33-2.69-1.33-3.46 0L2.74 18c-.77 1.33.19 3 1.73 3zM12 14c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"},null,-1),B={key:1,xmlns:"http://www.w3.org/2000/svg",height:"32px",viewBox:"0 0 24 24",width:"32px",fill:"#ffffff"},N=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 11c-.55 0-1-.45-1-1V8c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"},null,-1),O={key:2,xmlns:"http://www.w3.org/2000/svg",height:"32px",viewBox:"0 0 24 24",width:"32px",fill:"#ffffff"},P=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M0 0h24v24H0V0z",fill:"none"},null,-1),D=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.29 16.29L5.7 12.7c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 14.17l6.88-6.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-7.59 7.59c-.38.39-1.02.39-1.41 0z"},null,-1),H={key:3,xmlns:"http://www.w3.org/2000/svg",height:"32px",viewBox:"0 0 24 24",width:"32px",fill:"#616161"},k=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M0 0h24v24H0z",fill:"none"},null,-1),V=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"},null,-1),R={key:4,xmlns:"http://www.w3.org/2000/svg",height:"32px",viewBox:"0 0 24 24",width:"32px",fill:"#ffffff"},$=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M0 0h24v24H0z",fill:"none"},null,-1),j=(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path",{d:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"},null,-1);S.render=function(e,t,o,n,s,i){return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span",z,["warning"===e.type?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg",L,[E])):"danger"===e.type?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg",B,[N])):"success"===e.type?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg",O,[P,D])):"default"===e.type?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg",H,[k,V])):((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg",R,[$,j]))])};var q=(0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({name:"MToast",components:{MIcon:S},props:{visible:Boolean,text:{type:String,default:""},description:{type:String,default:""},toastBackgroundColor:{type:String,default:""},type:{type:String,default:"default"},onClose:{type:Function,default:()=>null},onCloseHandler:{type:Function,required:!0},offset:{type:Number,required:!0},id:{type:Number,required:!0},timeout:{type:Number,default:5e3},position:{type:String,required:!0},showCloseButton:{type:Boolean,default:!0},swipeClose:{type:Boolean,default:!0},hideProgressBar:{type:Boolean,default:!1},showIcon:{type:Boolean,default:!1},transition:{type:String,default:"bounce"}},setup(e,t){const o=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(),{swipedDiff:n,startSwipeHandler:s,swipeStyle:i,cleanUpMove:u}=M(e.position,e.onCloseHandler,e.swipeClose),{transitionType:c}=(h=e.position,d=e.transition,v=n,{transitionType:(0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)((()=>v.value>200?"mosha__fadeOutLeft":v.value<-200?"mosha__fadeOutRight":C[h][d]))});var h,d,v;const{start:f,stop:_,progress:g}=((e,t)=>{const o=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(),n=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0),s=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(t),i=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(),p=(0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(100),u=()=>{clearInterval(i.value),clearTimeout(o.value)};return (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)((()=>{})),(0,vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted)((()=>{u()})),{start:()=>{n.value=Date.now(),clearTimeout(o.value),i.value=setInterval((()=>{p.value--}),t/100-2),o.value=setTimeout(e,s.value)},stop:()=>{clearInterval(i.value),clearTimeout(o.value),s.value-=Date.now()-n.value},clear:u,progress:p}})((()=>{e.onCloseHandler()}),e.timeout),w=(0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)((()=>t.slots.default)),y=(0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)((()=>/<\/?[a-z][\s\S]*>/i.test(e.description))),b=()=>{e.timeout>0&&f()};return (0,vue__WEBPACK_IMPORTED_MODULE_0__.watchEffect)((()=>{const{customStyle:t}=((e,t,o)=>{const n=(0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)((()=>{switch(e){case"top-left":return{left:"0",top:`${t}px`};case"bottom-left":return{left:"0",bottom:`${t}px`};case"bottom-right":return{right:"0",bottom:`${t}px`};case"top-center":return{top:`${t}px`,left:"0",right:"0",marginRight:"auto",marginLeft:"auto"};case"bottom-center":return{bottom:`${t}px`,left:"0",right:"0",marginRight:"auto",marginLeft:"auto"};default:return{right:"0",top:`${t}px`}}}));return o.length>0&&(n.value.backgroundColor=o),{customStyle:n}})(e.position,e.offset,e.toastBackgroundColor);o.value=t.value})),(0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)((()=>{b()})),{style:o,transitionType:c,startTimer:b,stopTimer:()=>{e.timeout>0&&_()},progress:g,onTouchStart:e=>{s(e)},onMouseLeave:()=>{u("mousemove"),b()},onMouseDown:e=>{s(e)},swipeStyle:i,isSlotPassed:w,isDescriptionHtml:y}}});const U={class:"mosha__toast__content-wrapper"},W={class:"mosha__toast__content"},X={class:"mosha__toast__content__text"},F={key:1,class:"mosha__toast__content__description"},Y={key:0,class:"mosha__toast__slot-wrapper"};q.render=function(e,t,o,n,s,i){const r=(0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MIcon");return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition,{name:e.transitionType,type:"animation"},{default:(0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)((()=>[e.visible?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",{key:0,class:["mosha__toast",e.toastBackgroundColor?null:e.type],style:[e.style,e.swipeStyle],onMouseenter:t[2]||(t[2]=(...t)=>e.stopTimer&&e.stopTimer(...t)),onMouseleave:t[3]||(t[3]=(...t)=>e.onMouseLeave&&e.onMouseLeave(...t)),onTouchstart:t[4]||(t[4]=(...t)=>e.onTouchStart&&e.onTouchStart(...t)),onMousedown:t[5]||(t[5]=(...t)=>e.onMouseDown&&e.onMouseDown(...t))},[(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div",U,[e.showIcon?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(r,{key:0,type:e.type},null,8,["type"])):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div",W,[(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div",X,(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.text),1),e.description.length>0&&e.isDescriptionHtml?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",{key:0,class:"mosha__toast__content__description",innerHTML:e.description},null,8,["innerHTML"])):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0),e.description.length>0&&!e.isDescriptionHtml?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",F,(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.description),1)):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0)])]),e.isSlotPassed?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",Y,[(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(e.$slots,"default")])):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0),e.showCloseButton?((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",{key:1,class:"mosha__toast__close-icon",onClick:t[1]||(t[1]=(...t)=>e.onCloseHandler&&e.onCloseHandler(...t))})):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0),e.hideProgressBar?(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0):((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(),(0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div",{key:2,class:"mosha__toast__progress",style:{width:`${e.progress}%`}},null,4))],38)):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("",!0)])),_:3},8,["name"])};const A={"top-left":[],"top-right":[],"bottom-left":[],"bottom-right":[],"top-center":[],"bottom-center":[]};let G=0;const J=(e,t)=>{if(!e)return;const o=t?Z(t):I;if(e.__v_isVNode)return void K(T.VNODE,o,e);if(e.hasOwnProperty("render"))return void K(T.COMPONENT,o,e);const n=ee(e);K(T.TITLE_DESCRIPTION,o,n)},K=(e,t,o)=>{const n=te(t,A,12),s=G++,i=document.createElement("div");let r;document.body.appendChild(i),r=e===T.VNODE?(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(q,Q(t,s,n,oe),(()=>[o])):e===T.TITLE_DESCRIPTION?(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(q,Q(t,s,n,oe,o)):(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(q,Q(t,s,n,oe),(()=>[(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(o)])),(0,vue__WEBPACK_IMPORTED_MODULE_0__.render)(r,i),t.position&&(A[t.position].push({toastVNode:r,container:i}),r.component&&(r.component.props.visible=!0))},Q=(e,t,o,n,s)=>i(i(i({},e),s),{id:t,offset:o,visible:!1,onCloseHandler:()=>{n(t,e.position?e.position:"top-right")}}),Z=e=>{const t=i(i({},e),{type:e.type||I.type,timeout:e.timeout||I.timeout,showCloseButton:e.showCloseButton,position:e.position||I.position,showIcon:e.showIcon,swipeClose:e.swipeClose,transition:e.transition||I.transition});return t.hideProgressBar=void 0!==t.timeout&&t.timeout<=0,void 0!==e.hideProgressBar&&(t.hideProgressBar=e.hideProgressBar),t},ee=e=>({text:"string"==typeof e?e:e.title,description:"string"==typeof e?void 0:e.description}),te=(e,t,o)=>{let n=o;if(!e.position)throw new Error("no position");return t[e.position].forEach((({toastVNode:e})=>{const t=e.el.offsetHeight+o;n+=t||0})),n},oe=(e,t)=>{const o=A[t],n=o.findIndex((({toastVNode:t})=>t.props&&e===t.props.id));if(-1===n)return;const{container:s,toastVNode:i}=o[n];if(!i.el)return;const r=i.el.offsetHeight;A[t].splice(n,1),((e,t,o,n)=>{for(let s=e;s<t.length;s++){const{toastVNode:e}=t[s];if(!e.el)return;const i=o.split("-")[0]||"top",r=parseInt(e.el.style[i],10)-n-12;if(!e.component)return;e.component.props.offset=r}})(n,o,t,r),i.component&&(i.component.props.visible=!1,i.component.props.onClose&&i.component.props.onClose(),setTimeout((()=>{(0,vue__WEBPACK_IMPORTED_MODULE_0__.render)(null,s),document.body.removeChild(s)}),1e3))};const ne=(e,t)=>(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(e,t);var se={install:e=>{e.config.globalProperties.$moshaToast=J,e.provide("moshaToast",J)}};/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (se);
+
+
+/***/ }),
+
 /***/ "./node_modules/regenerator-runtime/runtime.js":
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
@@ -47852,6 +47953,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ViewCategories_vue_vue_type_style_index_0_id_7e3c70ef_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/mosha-vue-toastify/dist/style.css":
+/*!********************************************************!*\
+  !*** ./node_modules/mosha-vue-toastify/dist/style.css ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./style.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/mosha-vue-toastify/dist/style.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_style_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_style_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 

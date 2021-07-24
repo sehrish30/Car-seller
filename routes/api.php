@@ -33,3 +33,4 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 
 Route::get('categories', [CategoryController::class, 'index']);
 Route::post('add/category',[CategoryController::class, 'store']);
+Route::delete('delete/category/{id}', [CategoryController::class, 'destroy']);

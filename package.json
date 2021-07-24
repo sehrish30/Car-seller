@@ -23,6 +23,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/vue-fontawesome": "^3.0.0-4",
+        "mosha-vue-toastify": "^1.0.17",
         "postcss-import": "^14.0.2",
         "tailwindcss": "^2.2.6",
         "vue-router": "^4.0.10",

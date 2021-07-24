@@ -42,6 +42,7 @@
                     <td class="p-4 text-center">
                         <button
                             type="submit"
+                            @click="deleteCategory(item.id)"
                             class="
                                 flex
                                 items-center
@@ -66,6 +67,8 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 export default {
     setup() {
@@ -80,9 +83,31 @@ export default {
         };
         getCategories();
 
+        const deleteCategory = async (id) => {
+            console.log("DELETE");
+            try {
+                const response = await axios.delete(
+                    `http://127.0.0.1:8000/api/delete/category/${id}`
+                );
+                if (response.status >= 200 && response.status < 300) {
+                    createToast("Category deleted", {
+                        title: "some title",
+                        description: "some good description",
+                        type: "info",
+                    });
+                    categories.value = categories.value.filter(
+                        (category) => category.id !== id
+                    );
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         return {
             categories,
             url,
+            deleteCategory,
         };
     },
 };
