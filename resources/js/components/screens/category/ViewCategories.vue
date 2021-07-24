@@ -18,12 +18,18 @@
                 >
                     <td class="p-4 text-center">
                         <img
+                            v-if="item.image"
                             class="image"
-                            src="https://tesla-cdn.thron.com/delivery/public/image/tesla/195458a0-ff67-488c-b972-14d23d2c42fb/bvlatuR/std/1200x630/ms-homepage-social"
+                            v-bind:src="`${url}/images/${item.image}`"
+                        />
+                        <img
+                            v-else
+                            class="image"
+                            src="https://cdn.asiatatler.com/asiatatler/i/hk/2020/06/17102237-cars-tesla-model-s_cover_2000x1250.jpg"
                         />
                     </td>
+                    <td class="p-4 text-center">{{ item.name }}</td>
                     <td class="p-4 text-center">{{ item.order }}</td>
-                    <td class="p-4 text-center">{{ item.image }}</td>
                     <td class="p-4 text-center items-center content-center">
                         <button
                             type="submit"
@@ -64,6 +70,7 @@ import axios from "axios";
 export default {
     setup() {
         const categories = ref([]);
+        const url = ref("http://127.0.0.1:8000");
         const getCategories = async () => {
             const res = await axios.get("http://localhost:8000/api/categories");
             if (res.status >= 200 && res.status < 300) {
@@ -75,6 +82,7 @@ export default {
 
         return {
             categories,
+            url,
         };
     },
 };

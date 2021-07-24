@@ -132,8 +132,10 @@
                                 icon="camera"
                                 class="mt-3 mr-2"
                             />
-                            <span class="mt-2 text-base leading-normal"
-                                >Select a file</span
+                            <span class="mt-2 text-base leading-normal">
+                                {{
+                                    imageName ? imageName : "Select a file"
+                                }}</span
                             >
                         </div>
                         <input
@@ -149,6 +151,7 @@
                 <div class="md:w-1/3"></div>
                 <div class="md:w-2/3">
                     <button
+                        @click="submit"
                         class="
                             shadow
                             bg-purple-500
@@ -172,22 +175,58 @@
 
 <script>
 import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+
 export default {
     setup() {
+        const router = useRouter();
+
         const name = ref("");
         const order = ref("");
         const image = ref("");
+        const imageName = ref("");
 
         const someHandler = (e) => {
-            console.log(e.target.value);
-            image.value = e.target.value;
+            // console.log(e.target.value.split("\\").pop());
+            console.log(e.target.files[0]);
             e.preventDefault();
+            image.value = e.target.files[0];
+            imageName.value = e.target.value.split("\\").pop();
+        };
+
+        const submit = async () => {
+            try {
+                let formData = new FormData();
+                formData.append("name", name.value);
+                formData.append("order", order.value);
+                formData.append("image", image.value);
+                const res = await axios.post(
+                    "http://127.0.0.1:8000/api/add/category",
+                    formData,
+                    {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+                if (res.status >= 200 && res.status <= 300) {
+                    console.log(res.data.name);
+                    router.push({
+                        name: "viewcategories",
+                    });
+                }
+            } catch (e) {
+                console.log(e);
+            }
         };
         return {
             name,
             order,
             image,
             someHandler,
+            submit,
+            imageName,
         };
     },
 };

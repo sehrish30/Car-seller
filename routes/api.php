@@ -32,3 +32,4 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 });
 
 Route::get('categories', [CategoryController::class, 'index']);
+Route::post('add/category',[CategoryController::class, 'store']);

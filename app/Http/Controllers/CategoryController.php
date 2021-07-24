@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+       
     }
 
     /**
@@ -38,7 +38,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $category->order = $request->order;
+        $category->save();
+
+        if($request->image){
+            // PHP artisan storage:link
+            // http://127.0.0.1:8000/images/1627118582aditya-chinchure-H0OSpZ4vJDo-unsplash.jpg
+            $image = $request->image;
+            $image_new_name = time().$image->getClientOriginalName();
+            $image->move(public_path('images'), $image_new_name);
+            $category->image = $image_new_name;
+            $category->save();
+        }
+        return response()->json(['status'=> 'success','category' => $category]);
     }
 
     /**
