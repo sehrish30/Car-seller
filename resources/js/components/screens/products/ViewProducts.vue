@@ -79,6 +79,8 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
 export default {
     setup() {
@@ -93,7 +95,21 @@ export default {
         };
         getProducts();
 
-        const deleteProducts = async (id) => {};
+        const deleteProducts = async (id) => {
+            const res = await axios.delete(
+                `http://127.0.0.1:8000/api/delete/product/${id}`
+            );
+            if (res.status >= 200 && res.status < 300) {
+                createToast("Product deleted", {
+                    title: "some title",
+                    description: "some good description",
+                    type: "info",
+                });
+                products.value = products.value.filter(
+                    (product) => product.id !== id
+                );
+            }
+        };
         return {
             products,
             deleteProducts,
