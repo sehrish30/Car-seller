@@ -252,7 +252,7 @@ export default {
                 if (res.status >= 200 && res.status < 300) {
                     console.log(res.data.name);
                     router.push({
-                        name: "viewcategories",
+                        name: "viewProducts",
                     });
                 }
             } catch (e) {

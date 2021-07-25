@@ -52,7 +52,7 @@
                     Categories
                 </router-link>
                 <router-link
-                    to="#responsive-header"
+                    :to="{ name: 'viewProducts' }"
                     class="
                         primary-color
                         block

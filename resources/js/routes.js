@@ -7,6 +7,7 @@ import ViewCategories from "./components/screens/category/ViewCategories.vue";
 import AddCategory from "./components/screens/category/AddCategory.vue";
 import EditCategory from "./components/screens/category/EditCategory.vue";
 import AddProduct from "./components/screens/products/AddProduct.vue";
+import ViewProducts from "./components/screens/products/ViewProducts.vue";
 // import store from "./store/index";
 
 const router = createRouter({
@@ -53,6 +54,11 @@ const router = createRouter({
             path: "/add-product",
             component: AddProduct,
             name: "addProduct",
+        },
+        {
+            path: "/view-product",
+            component: ViewProducts,
+            name: "viewProducts",
         },
     ],
 });
