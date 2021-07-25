@@ -6,6 +6,7 @@ import Dashboard from "./components/dashboard/Dashboard.vue";
 import ViewCategories from "./components/screens/category/ViewCategories.vue";
 import AddCategory from "./components/screens/category/AddCategory.vue";
 import EditCategory from "./components/screens/category/EditCategory.vue";
+import AddProduct from "./components/screens/products/AddProduct.vue";
 // import store from "./store/index";
 
 const router = createRouter({
@@ -47,6 +48,11 @@ const router = createRouter({
             component: EditCategory,
             name: "editCategory",
             props: true,
+        },
+        {
+            path: "/add-product",
+            component: AddProduct,
+            name: "addProduct",
         },
     ],
 });

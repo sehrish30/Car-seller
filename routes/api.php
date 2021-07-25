@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::post('add/category',[CategoryController::class, 'store']);
 Route::delete('delete/category/{id}', [CategoryController::class, 'destroy']);
 Route::post('update/category/{id}', [CategoryController::class, 'update']);
+Route::post('add/product', [ProductController::class, 'store']);
