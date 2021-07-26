@@ -85,7 +85,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+
+        if($request->image && $request->image !== $product->image){
+                $image = $request->image;
+                $image_new_name = time().$image->getClientOriginalName();
+                $image->move(public_path('products'), $image_new_name);
+                $product->image = $image_new_name;
+        }
+        $product->save();
     }
 
     /**

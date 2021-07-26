@@ -52,6 +52,7 @@
                     />
                 </div>
             </div>
+
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-1/3">
                     <label
@@ -217,13 +218,15 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
-    setup() {
-        const name = ref("");
-        const order = ref("");
+    props: ["id", "name", "order", "price", "image", "description"],
+    setup(props) {
+        console.log("RANFI K BACHEY", props.name, props.price);
+        const name = ref(props.name);
+        const order = ref(props.order);
         const image = ref("");
-        const price = ref("");
-        const description = ref("");
-        const imageName = ref("");
+        const price = ref(props.price);
+        const description = ref(props.description);
+        const imageName = ref(props.image);
         const router = useRouter();
 
         const someHandler = (e) => {
@@ -239,12 +242,12 @@ export default {
                 let formData = new FormData();
                 formData.append("name", name.value);
                 formData.append("order", order.value);
-                formData.append("image", image.value);
+                image.value && formData.append("image", image.value);
                 formData.append("description", description.value);
                 formData.append("price", price.value);
-
+                console.log("AZAAB");
                 const res = await axios.post(
-                    "http://127.0.0.1:8000/api/add/product",
+                    `http://127.0.0.1:8000/api/update/product/${props.id}`,
                     formData,
                     {
                         headers: {
@@ -253,7 +256,6 @@ export default {
                     }
                 );
                 if (res.status >= 200 && res.status < 300) {
-                    console.log(res.data.name);
                     router.push({
                         name: "viewProducts",
                     });
@@ -262,15 +264,15 @@ export default {
                 console.log(e);
             }
         };
+        console.log(props);
         return {
+            someHandler,
+            submit,
+            imageName,
             name,
-            order,
             image,
             price,
             description,
-            submit,
-            someHandler,
-            imageName,
         };
     },
 };

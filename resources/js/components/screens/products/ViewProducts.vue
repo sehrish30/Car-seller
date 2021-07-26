@@ -35,12 +35,14 @@
                             @click="
                                 () => {
                                     $router.push({
-                                        name: 'editCategory',
+                                        name: 'editProducts',
                                         params: {
                                             id: item.id,
                                             name: item.name,
                                             order: item.order,
                                             image: item.image,
+                                            price: item.price,
+                                            description: item.description,
                                         },
                                     });
                                 }
@@ -81,9 +83,12 @@ import { ref } from "vue";
 import axios from "axios";
 import { createToast } from "mosha-vue-toastify";
 import "mosha-vue-toastify/dist/style.css";
+import { useRouter } from "vue-router";
 
 export default {
     setup() {
+        const router = useRouter();
+
         const products = ref([]);
         const url = ref("http://127.0.0.1:8000");
         const getProducts = async () => {
