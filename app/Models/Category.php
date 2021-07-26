@@ -11,4 +11,8 @@ class Category extends Model
 
     // modify all properties empty means modify any property we want
     protected $guarded = [];
+
+    public function products(){
+        return $this->hasMany('App\Models\Product', 'product_id');
+    }
 }

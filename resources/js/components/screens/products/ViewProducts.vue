@@ -42,6 +42,7 @@
                                             order: item.order,
                                             image: item.image,
                                             price: item.price,
+                                            category: item.category_id,
                                             description: item.description,
                                         },
                                     });
@@ -92,7 +93,7 @@ export default {
         const products = ref([]);
         const url = ref("http://127.0.0.1:8000");
         const getProducts = async () => {
-            const res = await axios.get("http://localhost:8000/api/products");
+            const res = await axios.get("products");
             if (res.status >= 200 && res.status < 300) {
                 console.log(res.data.products);
                 products.value = res.data.products;

@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-       $products = Product::all();
+       $products = Product::with('category')->get();
        return response()->json([
            'products'=> $products
        ]);
@@ -42,6 +42,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
+        $product->category_id = $request->category;
         if($request->image){
             $image = $request->image;
             $image_new_name = time().$image->getClientOriginalName();
@@ -90,6 +91,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->category_id = $request->category;
 
         if($request->image && $request->image !== $product->image){
                 $image = $request->image;

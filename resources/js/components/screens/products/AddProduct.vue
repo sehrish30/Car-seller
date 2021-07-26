@@ -184,6 +184,73 @@
                         />
                     </label>
                 </div>
+                <div class="mb-4">
+                    <label
+                        class="
+                            block
+                            uppercase
+                            tracking-wide
+                            text-gray-700 text-xs
+                            font-bold
+                            mb-2
+                        "
+                        for="grid-state"
+                    >
+                        Subject
+                    </label>
+                    <div class="relative">
+                        <select
+                            v-model="selectedCategory"
+                            return-object
+                            class="
+                                block
+                                appearance-none
+                                w-full
+                                bg-gray-200
+                                border border-gray-200
+                                text-gray-700
+                                py-3
+                                px-4
+                                pr-8
+                                rounded
+                                leading-tight
+                                focus:outline-none
+                                focus:bg-white
+                                focus:border-gray-500
+                            "
+                        >
+                            <option
+                                v-for="category in categories"
+                                :key="category.id"
+                                :value="category.id"
+                            >
+                                {{ category.name }}
+                            </option>
+                        </select>
+                        <div
+                            class="
+                                pointer-events-none
+                                absolute
+                                inset-y-0
+                                right-0
+                                flex
+                                items-center
+                                px-2
+                                text-gray-700
+                            "
+                        >
+                            <svg
+                                class="fill-current h-4 w-4"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="md:flex items-center mx-auto">
@@ -222,6 +289,8 @@ export default {
         const order = ref("");
         const image = ref("");
         const price = ref("");
+        const selectedCategory = ref({});
+        const categories = ref([]);
         const description = ref("");
         const imageName = ref("");
         const router = useRouter();
@@ -242,16 +311,13 @@ export default {
                 formData.append("image", image.value);
                 formData.append("description", description.value);
                 formData.append("price", price.value);
+                formData.append("category", selectedCategory.value);
 
-                const res = await axios.post(
-                    "http://127.0.0.1:8000/api/add/product",
-                    formData,
-                    {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                );
+                const res = await axios.post("add/product", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
                 if (res.status >= 200 && res.status < 300) {
                     console.log(res.data.name);
                     router.push({
@@ -262,6 +328,18 @@ export default {
                 console.log(e);
             }
         };
+
+        const getCategories = async () => {
+            await axios
+                .get("http://127.0.0.1:8000/api/categories")
+                .then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        console.log(response.data.categories);
+                        categories.value = response.data.categories;
+                    }
+                });
+        };
+        getCategories();
         return {
             name,
             order,
@@ -271,6 +349,9 @@ export default {
             submit,
             someHandler,
             imageName,
+            categories,
+            getCategories,
+            selectedCategory,
         };
     },
 };

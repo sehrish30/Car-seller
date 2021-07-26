@@ -8,6 +8,8 @@ window._ = require("lodash");
 
 window.axios = require("axios");
 
+axios.defaults.baseURL = "http://localhost:8000/api/";
+
 // axios.defaults.withCredentials = true;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
