@@ -257,15 +257,17 @@ export default {
             // csrf token with SPA app for laravel
             axios.get("/sanctum/csrf-cookie").then(async (response) => {
                 try {
-                    const res = await axios.post("/api/authenticate", {
+                    const res = await axios.post("api/admin/login", {
                         email: email.value,
                         password: password.value,
                     });
-
+                    console.log(res, "RES");
                     localStorage.setItem("token", res.data.access_token);
-                    router.push({
-                        name: "dashboard",
-                    });
+                    if (res.data.status_code === 200) {
+                        router.push({
+                            name: "dashboard",
+                        });
+                    }
                 } catch (err) {
                     console.log(`Error ${err}`);
                 }

@@ -9,6 +9,7 @@ import EditCategory from "./components/screens/category/EditCategory.vue";
 import AddProduct from "./components/screens/products/AddProduct.vue";
 import ViewProducts from "./components/screens/products/ViewProducts.vue";
 import EditProducts from "./components/screens/products/EditProducts.vue";
+import Home from "./components/screens/client/Home.vue";
 // import store from "./store/index";
 
 const router = createRouter({
@@ -66,6 +67,10 @@ const router = createRouter({
             component: EditProducts,
             name: "editProducts",
             props: true,
+        },
+        {
+            path: "/:catchAll(.*)",
+            component: Home,
         },
     ],
 });

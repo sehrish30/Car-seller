@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('/authenticate', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix'=> 'admin'],function(){
+  Route::post('login', [AuthController::class, 'login']);
+  Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
@@ -41,3 +48,7 @@ Route::get('products', [ProductController::class, 'index']);
 Route::delete('delete/product/{id}', [ProductController::class, 'destroy']);
 
 Route::post('update/product/{id}', [ProductController::class, 'update']);
+
+// Route::get('{any?}', function(){
+//   return view('welcome');
+// })->where('any', '.*');
