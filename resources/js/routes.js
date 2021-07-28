@@ -11,6 +11,7 @@ import ViewProducts from "./components/screens/products/ViewProducts.vue";
 import EditProducts from "./components/screens/products/EditProducts.vue";
 import Home from "./components/screens/client/Home.vue";
 import Shop from "./components/screens/client/shop/Shop.vue";
+import ProductDetails from "./components/screens/client/shop/ProductDetails.vue";
 // import store from "./store/index";
 
 const router = createRouter({
@@ -73,6 +74,12 @@ const router = createRouter({
             path: "/shop",
             component: Shop,
             name: "Shop",
+        },
+        {
+            path: "/productDetails",
+            component: ProductDetails,
+            name: "ProductDetails",
+            props: true,
         },
         {
             path: "/:catchAll(.*)",

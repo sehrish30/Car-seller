@@ -49,6 +49,7 @@ Route::delete('delete/product/{id}', [ProductController::class, 'destroy']);
 
 Route::post('update/product/{id}', [ProductController::class, 'update']);
 
+Route::get('latestProducts', [ProductController::class, 'latestProducts']);
 // Route::get('{any?}', function(){
 //   return view('welcome');
 // })->where('any', '.*');

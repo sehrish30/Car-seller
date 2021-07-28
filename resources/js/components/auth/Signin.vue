@@ -257,7 +257,7 @@ export default {
             // csrf token with SPA app for laravel
             axios.get("/sanctum/csrf-cookie").then(async (response) => {
                 try {
-                    const res = await axios.post("api/admin/login", {
+                    const res = await axios.post("admin/login", {
                         email: email.value,
                         password: password.value,
                     });
