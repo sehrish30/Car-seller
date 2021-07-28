@@ -281,11 +281,18 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
+    //      props: {
+    //     category: {
+    //       type: String,
+    //       required: true
+    //     }
+    //   },
     props: ["id", "name", "order", "price", "image", "description", "category"],
+
     setup(props) {
         console.log("AZAB", props.category);
         const name = ref(props.name);
@@ -343,8 +350,9 @@ export default {
                 }
             });
         };
-        getCategories();
+        // getCategories();
         console.log(props);
+        onMounted(getCategories);
         return {
             someHandler,
             submit,

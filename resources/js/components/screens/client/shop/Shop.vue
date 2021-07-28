@@ -89,6 +89,89 @@
                 </div>
             </div>
         </div>
+
+        <div class="grid grid-cols-3 gap-4">
+            <div class="p-10" v-for="category in categories" :key="category.id">
+                <!--Card 1-->
+                <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                    <img
+                        class="w-full"
+                        v-bind:src="`${url}/products/${category.image}`"
+                        alt="Mountain"
+                    />
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">Mountain</div>
+                        <p class="text-gray-700 text-base">
+                            {{ category.name }}
+                        </p>
+                    </div>
+                    <div class="px-6 pt-4 pb-2">
+                        <span
+                            class="
+                                inline-block
+                                bg-gray-200
+                                rounded-full
+                                px-3
+                                py-1
+                                text-sm
+                                font-semibold
+                                text-gray-700
+                                mr-2
+                                mb-2
+                            "
+                        >
+                            {{ category.price }}</span
+                        >
+                        <span
+                            class="
+                                inline-block
+                                bg-gray-200
+                                rounded-full
+                                px-3
+                                py-1
+                                text-sm
+                                font-semibold
+                                text-gray-700
+                                mr-2
+                                mb-2
+                            "
+                            >{{ category?.name }}</span
+                        >
+                        <span
+                            class="
+                                inline-block
+                                bg-gray-200
+                                rounded-full
+                                px-3
+                                py-1
+                                text-sm
+                                font-semibold
+                                text-gray-700
+                                mr-2
+                                mb-2
+                            "
+                            >#winter</span
+                        >
+
+                        <button
+                            @click="() => navigateToCategoryScreen(category)"
+                            class="
+                                text-center text-indigo-400
+                                font-bold
+                                rounded
+                                py-2
+                                w-2/12
+                                focus:outline-none
+                                bg-gray-900
+                                border-2 border-indigo-400
+                            "
+                        >
+                            Category
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </template>
 
@@ -119,6 +202,7 @@ export default {
 
         const getCategories = async () => {
             await axios.get(`/categories`).then((res) => {
+                console.log("ASIM", res.data.categories, res.status >= 200);
                 if (res.status >= 200 && res.status < 300) {
                     categories.value = res.data.categories;
                 }
@@ -134,7 +218,21 @@ export default {
             });
         };
         getLatestProducts();
-        return { products, url, productDetails };
+
+        const navigateToCategoryScreen = (category) => {
+            console.log(category);
+            // router.push({
+            //     name: "CategoryProducts",
+            //     query: { category },
+            // });
+        };
+        return {
+            products,
+            url,
+            productDetails,
+            categories,
+            navigateToCategoryScreen,
+        };
     },
 };
 </script>
